@@ -49,8 +49,28 @@ def getResult(inputList, task):
             result += int(zeilen_list[merke_index])
         else:
             
+            # Erzeugung einer Vollordnung
+            actual_rule_dict = dict()
+            for key in rule_dict.keys():
+                if key in ele:
+                    actual_rule_dict[key] = set()
+                    for set_ele in  rule_dict[key]:
+                        if set_ele in  ele:
+                            actual_rule_dict[key].add(set_ele)
+            new_update_list = list()
+            while actual_rule_dict:
+                for key in  actual_rule_dict.keys():
+                    flag_key_in_set = False
+                    for val in  actual_rule_dict.values():
+                        if key in val:
+                            flag_key_in_set  = True
+                            break
+                    if not flag_key_in_set:
+                        break
+                new_update_list.append(key)
+                del actual_rule_dict[key]
             
-            result2 += 1
+            result2 += int(new_update_list[merke_index])
 
     return result if task == 1 else result2
 
@@ -73,7 +93,7 @@ def main():
     print_me(task = 1, expected_result = 7198, input_file = r'input_2.txt')
     #print_me(task = 2, expected_result = 48, input_file = r'input_3.txt')
     print_me(task = 2, expected_result = 123, input_file = r'input_1.txt')
-    #print_me(task = 2, expected_result = 0, input_file = r'input_2.txt')
+    print_me(task = 2, expected_result = 4230, input_file = r'input_2.txt')
 
 if __name__ == "__main__":
     SYSExit(main())
